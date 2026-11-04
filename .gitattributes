@@ -1,0 +1,2 @@
+# Normaliza quebras de linha: texto sempre em LF no repositório.
+* text=auto eol=lf

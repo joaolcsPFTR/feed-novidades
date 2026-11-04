@@ -1,0 +1,27 @@
+# Dependências
+node_modules/
+
+# Build
+dist/
+
+# Variáveis de ambiente (segredos) — versionar apenas os *.example
+.env
+.env.local
+.env.*.local
+.env.test
+
+# Arquivo não relacionado ao projeto (relatório avulso)
+relatorio-liveshopturbo.md
+
+# Logs
+*.log
+npm-debug.log*
+
+# Prisma
+prisma/*.db
+
+# Sistema operacional / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: liveshop-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: liveshop
+      POSTGRES_PASSWORD: liveshop
+      POSTGRES_DB: liveshop
+    ports:
+      - "5432:5432"
+    volumes:
+      - liveshop_pgdata:/var/lib/postgresql/data
+      # Cria também o banco de testes (liveshop_test) na primeira subida.
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U liveshop -d liveshop"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  liveshop_pgdata:
