@@ -1,0 +1,67 @@
+### Coleção de exemplos — Feed de Novidades
+### Use com a extensão REST Client (VS Code) ou o HTTP Client do IntelliJ.
+### Rode as requisições de cima para baixo: as variáveis são capturadas das respostas.
+
+@host = http://localhost:3000
+
+### Saúde
+GET {{host}}/health
+
+### Criar loja
+# @name criarLoja
+POST {{host}}/lojas
+Content-Type: application/json
+
+{ "nome": "Moda Viva" }
+
+### Criar cliente
+# @name criarCliente
+POST {{host}}/clientes
+Content-Type: application/json
+
+{ "nome": "Ana Souza", "email": "ana@exemplo.com" }
+
+### Capturando os ids das respostas acima
+@lojaId = {{criarLoja.response.body.id}}
+@clienteId = {{criarCliente.response.body.id}}
+
+### Cliente passa a seguir a loja
+POST {{host}}/clientes/{{clienteId}}/seguindo/{{lojaId}}
+
+### Loja publica uma novidade (com preço)
+POST {{host}}/lojas/{{lojaId}}/novidades
+Content-Type: application/json
+
+{ "texto": "Nova coleção de inverno chegou!", "preco": 199.90 }
+
+### Loja publica uma novidade (sem preço)
+POST {{host}}/lojas/{{lojaId}}/novidades
+Content-Type: application/json
+
+{ "texto": "Live de lançamento hoje às 20h" }
+
+### Feed do cliente (limite padrão 20)
+GET {{host}}/clientes/{{clienteId}}/feed
+
+### Feed do cliente com limite
+GET {{host}}/clientes/{{clienteId}}/feed?limite=5
+
+### Cliente deixa de seguir a loja
+DELETE {{host}}/clientes/{{clienteId}}/seguindo/{{lojaId}}
+
+### --- Exemplos de erro ---
+
+### 422 — texto vazio
+POST {{host}}/lojas/{{lojaId}}/novidades
+Content-Type: application/json
+
+{ "texto": "" }
+
+### 404 — loja inexistente
+GET {{host}}/clientes/00000000-0000-0000-0000-000000000000/feed
+
+### 409 — email duplicado
+POST {{host}}/clientes
+Content-Type: application/json
+
+{ "nome": "Outra Ana", "email": "ana@exemplo.com" }
