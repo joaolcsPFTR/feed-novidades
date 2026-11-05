@@ -74,7 +74,7 @@ Checagem rápida: `GET http://localhost:3000/health` deve responder `{ "status":
 
 ## Como rodar os testes
 
-Os testes de integração sobem a API de verdade (Supertest) contra um **banco separado**
+Os testes de integração sobem a API (Supertest) contra um **banco separado**
 (`liveshop_test`), para nunca tocar nos dados de desenvolvimento.
 
 ```bash
